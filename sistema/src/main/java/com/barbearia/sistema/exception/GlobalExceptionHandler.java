@@ -23,6 +23,11 @@ public class GlobalExceptionHandler {
         return error(HttpStatus.CONFLICT, ex.getMessage(), request, Map.of());
     }
 
+    @ExceptionHandler(BusinessRuleException.class)
+    ResponseEntity<ApiError> businessRule(BusinessRuleException ex, HttpServletRequest request) {
+        return error(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage(), request, Map.of());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<ApiError> validation(MethodArgumentNotValidException ex, HttpServletRequest request) {
         Map<String, String> fields = new LinkedHashMap<>();
