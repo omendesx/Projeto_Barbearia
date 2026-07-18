@@ -35,7 +35,11 @@ public class User  {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.createdAt = LocalDateTime.now();
+    }
+
+    @PrePersist
+    void prePersist() {
+        createdAt = LocalDateTime.now();
     }
     
     // Getters e Setters

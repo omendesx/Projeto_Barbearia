@@ -1,9 +1,11 @@
 package com.barbearia.sistema.controller;
 
+import com.barbearia.sistema.Dto.UserRequestDTO;
+import com.barbearia.sistema.Dto.UserResponseDTO;
 import com.barbearia.sistema.model.User;
 import com.barbearia.sistema.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,49 +13,52 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-
     private final UserService userService;
 
-    // Injeção via construtor (não precisa de @Autowired)
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
-    public List<User> listarTodos() {
-        return userService.findAll();
+    public List<UserResponseDTO> list(@RequestParam(required = false) String name) {
+        List<User> users = name == null ? userService.findAll() : userService.findByNameContaining(name);
+        return users.stream().map(this::toResponse).toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> buscarPorId(@PathVariable Long id) {
-        return userService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public UserResponseDTO findById(@PathVariable Long id) {
+        return toResponse(userService.findById(id).orElseThrow(
+                () -> new com.barbearia.sistema.exception.ResourceNotFoundException("Usuario nao encontrado")));
     }
 
     @PostMapping
-    public ResponseEntity<User> criar(@RequestBody User user) {
-        User novoUser = userService.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoUser);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponseDTO create(@Valid @RequestBody UserRequestDTO request) {
+        return toResponse(userService.save(toEntity(request)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> atualizar(@PathVariable Long id, @RequestBody User user) {
-        try {
-            User userAtualizado = userService.update(id, user);
-            return ResponseEntity.ok(userAtualizado);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public UserResponseDTO update(@PathVariable Long id, @Valid @RequestBody UserRequestDTO request) {
+        return toResponse(userService.update(id, toEntity(request)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        try {
-            userService.delete(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        userService.delete(id);
+    }
+
+    private User toEntity(UserRequestDTO dto) {
+        return new User(dto.getName(), dto.getEmail(), dto.getPassword(), dto.getRole());
+    }
+
+    private UserResponseDTO toResponse(User user) {
+        UserResponseDTO dto = new UserResponseDTO();
+        dto.setId(user.getId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole());
+        dto.setCreatedAt(user.getCreatedAt());
+        return dto;
     }
 }
