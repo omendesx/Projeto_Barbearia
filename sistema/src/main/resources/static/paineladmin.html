@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Painel Admin</title>
 </head>
 <body>
@@ -11,7 +12,7 @@
     </div>
     <main>
         <section>
-            <h2>Cadastrar Usuário</h2>
+            <h2>Cadastrar Clientes</h2>
             <form id="clientForm">
                 <label for="name">Nome:</label>
                 <input type="text" id="name" name="nome" required><br><br>
@@ -27,6 +28,35 @@
             </form>
             <p id="message" role="status" aria-live="polite"></p>
         </section>
+        <section>
+          <h2>Buscar cliente</h2>
+          <div id="showClient">
+
+          </div>
+          <button id="btnBuscar">Buscar clientes</button>
+        </section>
+
+        <section>
+          <h2>Cadastrar serviço</h2>
+          <form id="formservice">
+            <label for="nameService">Nome</label>
+            <input type="text" id="nameService" name="nameService" required><br>
+            <label for="description">Descrição</label>
+            <input type="text" id="description" name="description" required><br>
+            <label for="price">Preço</label>
+            <input type="text" id="price" name="price" required><br>
+            <label for="duration_minutes">Duração</label>
+            <input type="text" id="duration_minutes" name="duration_minutes" required><br>
+            <button type="submit">Cadastrar</button>
+          </form>
+        </section>
+        <section>
+          <h2>Listar Serviços</h2>
+          <div id="showServices"></div>
+          <button id="btnService">Buscar Serviços</button>
+        </section>
+
+
     </main>
     <script src="script.js"></script>
 </body>

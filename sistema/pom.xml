@@ -81,6 +81,8 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<!-- Durante spring-boot:run, serve src/main/resources diretamente. -->
+					<addResources>true</addResources>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
