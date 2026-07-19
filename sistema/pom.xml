@@ -3,6 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
+		<!-- O parent gerencia versões compatíveis dos componentes Spring. -->
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>4.1.0</version>
@@ -27,42 +28,51 @@
 		<url/>
 	</scm>
 	<properties>
+		<!-- Define a versão usada pelo compilador e pelo runtime do projeto. -->
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
-
+		<!-- Actuator fornece endpoints de diagnóstico e saúde da aplicação. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!-- Spring MVC fornece servidor web, controllers REST e serialização JSON. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
+		<!-- JPA integra entidades e repositories com o banco relacional. -->
+		<!-- Bean Validation executa @NotNull, @Size, @Email e outras regras dos DTOs. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<!-- Biblioteca usada para gerar hashes BCrypt das senhas. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+		<!-- DevTools melhora o ciclo local e não é incluído como dependência obrigatória. -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-crypto</artifactId>
 		</dependency>
+		<!-- Driver carregado em runtime para comunicação com PostgreSQL. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		<!-- Lombok gera código repetitivo durante a compilação. -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Ferramentas de teste para Spring MVC, JUnit e AssertJ. -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -75,6 +85,7 @@
 		</dependency>
 	</dependencies>
 
+	<!-- Plugins controlam empacotamento e compilação do projeto. -->
 	<build>
 		<plugins>
 			<plugin>
