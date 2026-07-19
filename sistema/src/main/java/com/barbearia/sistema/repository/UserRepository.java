@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
+/** Interface que delega ao Spring Data a implementação do acesso a usuários. */
 public interface UserRepository extends JpaRepository<User, Long> {
     
     // Busca por email (exato)
@@ -19,5 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // Verifica se email existe
     boolean existsByEmailIgnoreCase(String email);
 
+    // Verifica duplicidade desconsiderando o usuário que está sendo atualizado.
     boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id);
 }

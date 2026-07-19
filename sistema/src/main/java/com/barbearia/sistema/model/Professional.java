@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/** Entidade do profissional e dos serviços que ele está habilitado a executar. */
 @Getter @Setter @NoArgsConstructor
 @Entity
 @Table(name = "professionals")
@@ -28,6 +29,7 @@ public class Professional {
     @Column(nullable = false)
     private Boolean active = true;
 
+    // A tabela intermediária guarda os pares profissional-serviço.
     @ManyToMany
     @JoinTable(name = "professional_services",
             joinColumns = @JoinColumn(name = "professional_id"),
@@ -40,6 +42,7 @@ public class Professional {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    // Callbacks preenchem a auditoria sem depender do controller.
     @PrePersist void createDates() { createdAt = updatedAt = LocalDateTime.now(); }
     @PreUpdate void updateDate() { updatedAt = LocalDateTime.now(); }
 }

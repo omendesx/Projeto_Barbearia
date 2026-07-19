@@ -10,11 +10,14 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+/** Camada de acesso aos agendamentos; JpaRepository fornece o CRUD básico. */
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+    // Spring Data deriva estas três consultas a partir do nome de cada método.
     List<Appointment> findAllByOrderByStartTimeDesc();
     List<Appointment> findByClientIdOrderByStartTimeDesc(Long clientId);
     List<Appointment> findByProfessionalIdOrderByStartTimeDesc(Long professionalId);
 
+    // JPQL consulta entidades/campos Java, não nomes físicos de tabelas/colunas.
     @Query("""
         select count(a) > 0 from Appointment a
         where a.professional.id = :professionalId
@@ -22,6 +25,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
           and (:excludedId is null or a.id <> :excludedId)
           and a.startTime < :endTime and a.endTime > :startTime
         """)
+    // Dois intervalos colidem quando cada um começa antes do término do outro.
     boolean hasConflict(@Param("professionalId") Long professionalId,
                         @Param("startTime") LocalDateTime startTime,
                         @Param("endTime") LocalDateTime endTime,

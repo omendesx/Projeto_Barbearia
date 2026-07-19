@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/** Aplica as regras do catálogo antes de acessar o repositório. */
 @Service
 public class CatalogService {
     private final BarberServiceRepository repository;
@@ -17,6 +18,7 @@ public class CatalogService {
 
     @Transactional(readOnly = true)
     public List<BarberService> list(boolean onlyActive) {
+        // O ternário escolhe a consulta conforme a opção enviada pelo controller.
         return onlyActive ? repository.findByActiveTrueOrderByName() : repository.findAll();
     }
 
@@ -28,6 +30,7 @@ public class CatalogService {
     @Transactional
     public BarberService create(BarberService service) {
         if (repository.existsByNameIgnoreCase(service.getName())) throw new DuplicateResourceException("Servico com este nome ja existe");
+        // Impede que uma entrada de criação force a atualização de um ID existente.
         service.setId(null);
         normalize(service);
         return repository.save(service);
@@ -35,6 +38,7 @@ public class CatalogService {
 
     @Transactional
     public BarberService update(Long id, BarberService input) {
+        // Atualiza a entidade gerenciada existente em vez de substituir seu ID e datas.
         BarberService service = find(id);
         if (repository.existsByNameIgnoreCaseAndIdNot(input.getName(), id)) throw new DuplicateResourceException("Servico com este nome ja existe");
         service.setName(input.getName());
@@ -53,6 +57,7 @@ public class CatalogService {
         repository.save(service);
     }
 
+    // Padroniza texto e valor padrão em um único ponto usado por create/update.
     private void normalize(BarberService service) {
         service.setName(service.getName().trim());
         service.setDescription(service.getDescription() == null ? null : service.getDescription().trim());

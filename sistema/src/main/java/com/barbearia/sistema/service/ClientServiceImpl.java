@@ -9,10 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/** Implementação concreta do contrato ClientService. */
 @Service
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository repository;
 
+    // Injeção pelo construtor dispensa @Autowired quando há apenas um construtor.
     public ClientServiceImpl(ClientRepository repository) {
         this.repository = repository;
     }
@@ -20,6 +22,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional(readOnly = true)
     public List<Client> findAll(String name) {
+        // null ou texto vazio significam ausência de filtro.
         return name == null || name.isBlank() ? repository.findAll() : repository.findByNameContainingIgnoreCase(name);
     }
 
@@ -35,6 +38,7 @@ public class ClientServiceImpl implements ClientService {
         if (repository.existsByEmailIgnoreCase(client.getEmail())) {
             throw new DuplicateResourceException("Email ja cadastrado");
         }
+        // ID nulo informa ao JPA que deve executar INSERT.
         client.setId(null);
         client.setEmail(client.getEmail().trim().toLowerCase());
         client.setName(client.getName().trim());
@@ -52,6 +56,7 @@ public class ClientServiceImpl implements ClientService {
         client.setName(input.getName().trim());
         client.setEmail(input.getEmail().trim().toLowerCase());
         client.setAge(input.getAge());
+        // Se active não veio, conserva o valor que já estava persistido.
         client.setActive(input.getActive() == null ? client.getActive() : input.getActive());
         return repository.save(client);
     }

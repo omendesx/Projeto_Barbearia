@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/** Traduz requisições HTTP de clientes em chamadas da camada de serviço. */
 @RestController
 @RequestMapping("/api/clients")
 public class ClientController {
@@ -17,6 +18,7 @@ public class ClientController {
 
     public ClientController(ClientService clientService) { this.clientService = clientService; }
 
+    // O parâmetro name é opcional: ausente lista todos; presente filtra pelo nome.
     @GetMapping
     public List<ClientResponseDTO> list(@RequestParam(required = false) String name) {
         return clientService.findAll(name).stream().map(this::toResponse).toList();
@@ -25,6 +27,7 @@ public class ClientController {
     @GetMapping("/{id}")
     public ClientResponseDTO findById(@PathVariable Long id) { return toResponse(clientService.findById(id)); }
 
+    // Desserializa o JSON no DTO, valida os campos e devolve HTTP 201.
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ClientResponseDTO create(@Valid @RequestBody ClientRequestDTO request) {
@@ -40,12 +43,14 @@ public class ClientController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) { clientService.delete(id); }
 
+    // Converte entrada da API em entidade sem permitir que o cliente defina o ID.
     private Client toEntity(ClientRequestDTO request) {
         Client client = new Client(request.name(), request.email(), request.age());
         client.setActive(request.active());
         return client;
     }
 
+    // DTO de resposta separa o contrato HTTP da estrutura persistida pelo JPA.
     private ClientResponseDTO toResponse(Client client) {
         return new ClientResponseDTO(client.getId(), client.getName(), client.getEmail(), client.getAge(),
                 client.getActive(), client.getDateRegister(), client.getDateUpdate());

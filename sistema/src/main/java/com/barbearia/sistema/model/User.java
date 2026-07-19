@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/** Usuário administrativo persistido na tabela users. */
 @Entity
 @Table(name = "users")
 public class User  {
@@ -18,6 +19,7 @@ public class User  {
     @Column(unique = true, nullable = false, length = 150)
     private String email;
     
+    // Armazena o hash BCrypt, nunca a senha em texto puro.
     @Column(nullable = false, length = 255)
     private String password;
     
@@ -37,6 +39,7 @@ public class User  {
         this.role = role;
     }
 
+    // Define a data somente no primeiro INSERT.
     @PrePersist
     void prePersist() {
         createdAt = LocalDateTime.now();
@@ -61,6 +64,7 @@ public class User  {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     
+    // Entidades são consideradas iguais quando possuem a mesma identidade persistida.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,11 +73,13 @@ public class User  {
         return Objects.equals(id, user.id);
     }
     
+    // Mantém o contrato: objetos iguais devem produzir o mesmo hash.
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
     
+    // Representação textual útil em logs; a senha é propositalmente omitida.
     @Override
     public String toString() {
         return "User{" +
