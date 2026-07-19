@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<!-- Painel administrativo servido como arquivo estático pelo Spring Boot. -->
 <html lang="pt-br">
 <head>
+    <!-- Configuração de caracteres, responsividade e CSS externo. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
@@ -11,6 +13,7 @@
         <h1>Painel Admin</h1>
     </div>
     <main>
+        <!-- Formulário cujo submit é interceptado pelo script.js. -->
         <section>
             <h2>Cadastrar Clientes</h2>
             <form id="clientForm">
@@ -26,8 +29,10 @@
 
                 <input type="submit" value="Cadastrar">
             </form>
+            <!-- Região acessível que anuncia sucesso ou erro sem recarregar a página. -->
             <p id="message" role="status" aria-live="polite"></p>
         </section>
+        <!-- O JavaScript preenche showClient com a resposta de GET /api/clients. -->
         <section>
           <h2>Buscar cliente</h2>
           <div id="showClient">
@@ -36,6 +41,7 @@
           <button id="btnBuscar">Buscar clientes</button>
         </section>
 
+        <!-- Campos usados para montar o JSON enviado a POST /api/services. -->
         <section>
           <h2>Cadastrar serviço</h2>
           <form id="formservice">
@@ -50,14 +56,36 @@
             <button type="submit">Cadastrar</button>
           </form>
         </section>
+        <!-- Contêiner e botão para consultar o catálogo de serviços. -->
         <section>
           <h2>Listar Serviços</h2>
           <div id="showServices"></div>
           <button id="btnService">Buscar Serviços</button>
         </section>
 
+        <section>
+          <h2>Cadastrar profissionais</h2>
+          <form id="formPro">
+            <label for="name">Nome</label>
+            <input type="text" name="name" id="namePro"><br>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="emailPro"><br>
+            <label for="phone">Telefone</label>
+            <input type="text" name="phone" id="phonePro"><br>
+            <label for="servicesPro">Serviços</label>
+            <input type="number" name="servicesPro" id="servicesPro"><br>
+            <button type="submit">Cadastrar profissional</button>
+          </form>
+        </section>
+        <section>
+          <h2>Listar Profissionais</h2>
+          <div id="showProfessionals"></div>
+          <button id="btnPro">Buscar Serviços</button>
+        </section>
 
-    </main>
+
+      </main>
+      <!-- Carregado no fim para garantir que os elementos do DOM já existam. -->
     <script src="script.js"></script>
 </body>
 </html>

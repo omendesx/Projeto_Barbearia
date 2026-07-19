@@ -1,11 +1,16 @@
+/* O seletor universal aplica este reset a todos os elementos. */
 *{
+  /* Remove os espaçamentos padrão definidos pelo navegador. */
   padding: 0;
   margin: 0;
+  /* Faz width/height incluírem borda e preenchimento no cálculo. */
   box-sizing: border-box;
 }
+/* Define a aparência geral do corpo da página. */
 body{
   background-color: grey;
 }
+/* Destaca visualmente cada seção funcional do painel. */
 section{
   background-color: aqua;
   margin: 20px;
