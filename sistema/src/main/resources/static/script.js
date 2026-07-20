@@ -165,8 +165,21 @@ btnAppointments.addEventListener("click", async () => {
   const showAppointments = document.querySelector("#showAppointments")
   const response = await fetch("/api/appointments");
   const data = await response.json();
-  console.log(response)
-  console.log(data)
+
+  data.forEach(element => {
+
+    showAppointments.innerHTML = "";
+    showAppointments.innerHTML += `<div>
+      <p>Nome(id):${element.clientId} </p><br />
+      <p>Profissional(id):${element.professionalId} </p><br />
+      <p>Data:${element.startTime} </p><br />
+      <p>Notas:${element.notes} </p><br />
+
+
+
+    </div>`;
+
+  });
 })
 
 
