@@ -3,9 +3,44 @@ const clientForm = document.querySelector("#clientForm");
 const message = document.querySelector("#message");
 const formservice = document.querySelector("#formservice");
 const formPro = document.querySelector("#formPro");
+const formAppointments = document.querySelector("#formAppointments");
 
 
 
+
+formAppointments.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  // console.log(Number(document.querySelector("#clientId")))
+
+  const appointment = {
+    clientId: Number(document.querySelector("#clientId").value),
+    professionalId: Number(document.querySelector("#professionalId").value),
+    serviceIds: [Number(document.querySelector("#serviceId").value)],
+    startTime: document.querySelector("#startTime").value,
+    notes: document.querySelector("#notes").value.trim()
+  }
+  try {
+    console.log(appointment);
+    const response = await fetch("/api/appointments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify(appointment)
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+
+      throw new Error(
+        errorData?.message || `Erro ao cadastrar: ${response.status}`
+      );
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+})
 
 
 formPro.addEventListener("submit", async (event) => {
@@ -124,6 +159,18 @@ clientForm.addEventListener("submit", async (event) => {
     message.className = "error";
   }
 });
+
+const btnAppointmentss = document.querySelector("btnAppointments");
+btnAppointments.addEventListener("click", async () => {
+  const showAppointments = document.querySelector("#showAppointments")
+  const response = await fetch("/api/appointments");
+  const data = await response.json();
+  console.log(response)
+  console.log(data)
+})
+
+
+
 
 const btnPro = document.querySelector("#btnPro");
 btnPro.addEventListener("click", async () => {
