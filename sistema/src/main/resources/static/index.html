@@ -1,58 +1,111 @@
-<!DOCTYPE html>
-<!-- Documento HTML5 e idioma principal em português do Brasil. -->
-<html lang="pt-br">
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
 <head>
-    <!-- UTF-8 permite acentos; viewport adapta a largura a celulares. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Carrega a folha de estilos compartilhada. -->
+    <title>BarberPro</title>
+
     <link rel="stylesheet" href="css/style.css">
-    <title>Barbearia</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <!-- main contém o assunto principal e ajuda leitores de tela. -->
-    <main>
-        <h1>Barbearia</h1>
-        <!-- Cabeçalho com a navegação principal da página pública. -->
-        <header>
+
+    <header>
+
+        <div class="container">
+
+            <div class="logo">
+                <span class="gold">BARBER</span><span>PRO</span>
+            </div>
+
             <nav>
+
                 <ul>
-                    <li>
-                        <a href="#">Início</a>
-                    </li>
-                    <li>
-                        <a href="#">Serviços</a>
-                    </li>
-                    <li>
-                        <a href="#">Sobre</a>
-                    </li>
-                    <li>
-                        <a href="#">Contato</a>
-                    </li>
-                    <li>
-                        <a href="#">Login</a>
-                    </li>
+
+                    <li><a href="index.html">Início</a></li>
+
+                    <li><a href="#">Serviços</a></li>
+
+                    <li><a href="#">Sobre</a></li>
+
+                    <li><a href="#">Contato</a></li>
+
+                    <li><a class="btn-login" href="login.html">Login</a></li>
 
                 </ul>
+
             </nav>
-        </header>
-        <!-- Área reservada à apresentação dos serviços. -->
-        <section>
-            <h2>Serviços</h2>
+
+        </div>
+
+    </header>
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <h1>A Melhor Experiência em Barbearia</h1>
+
+                <p>
+                    Cortes modernos, barba impecável e atendimento de qualidade
+                    para você sair sempre no melhor estilo.
+                </p>
+
+                <a href="#" class="btn-principal">
+                    Agendar Horário
+                </a>
+
+            </div>
+
         </section>
-        <!-- Rodapé reservado para informações complementares. -->
-        <footer>
 
-        </footer>
+        <section class="servicos">
 
+            <h2>Nossos Serviços</h2>
 
+            <div class="cards">
 
+                <div class="card">
+                    <h3>Corte Masculino</h3>
+                    <p>Cortes modernos e clássicos.</p>
+                </div>
 
+                <div class="card">
+                    <h3>Barba</h3>
+                    <p>Modelagem completa da barba.</p>
+                </div>
 
+                <div class="card">
+                    <h3>Combo</h3>
+                    <p>Corte + Barba.</p>
+                </div>
 
+                 <div class="card">
+                    <h3>Corte Degradê</h3>
+                    <p>Estilo moderno com transição suave.</p>
+                </div>
 
+            </div>
 
+        </section>
 
     </main>
+
+    <footer>
+
+        <p>© 2026 BarberPro. Todos os direitos reservados.</p>
+
+    </footer>
+
 </body>
+
 </html>

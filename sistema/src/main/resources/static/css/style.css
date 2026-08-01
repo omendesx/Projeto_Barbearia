@@ -1,18 +1,470 @@
-/* O seletor universal aplica este reset a todos os elementos. */
 *{
-  /* Remove os espaçamentos padrão definidos pelo navegador. */
-  padding: 0;
-  margin: 0;
-  /* Faz width/height incluírem borda e preenchimento no cálculo. */
-  box-sizing: border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
-/* Define a aparência geral do corpo da página. */
+
 body{
-  background-color: grey;
+
+    font-family:"Manrope",sans-serif;
+
+    background:#0B0B0B;
+
+    color:#FFFFFF;
+
 }
-/* Destaca visualmente cada seção funcional do painel. */
-section{
-  background-color: aqua;
-  margin: 20px;
-  min-height: 150px;
+
+/* HEADER */
+
+header{
+
+    background:#111111;
+
+    border-bottom:1px solid #242424;
+
+}
+
+.container{
+
+    width:90%;
+
+    max-width:1400px;
+
+    margin:auto;
+
+    height:80px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.logo{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+}
+
+.gold{
+
+    color:#D4AF37;
+
+}
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+    gap:35px;
+
+}
+
+nav a{
+
+    color:#FFFFFF;
+
+    text-decoration:none;
+
+    font-size:17px;
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    color:#D4AF37;
+
+}
+
+.btn-login{
+
+    background:#D4AF37;
+
+    color:#111111;
+
+    padding:10px 22px;
+
+    border-radius:8px;
+
+    font-weight:700;
+
+}
+
+.btn-login:hover{
+
+    background:#E7C45B;
+
+    color:#111111;
+
+}
+
+/* HERO */
+
+.hero{
+
+    width:90%;
+
+    max-width:1400px;
+
+    margin:70px auto;
+
+    text-align:center;
+
+}
+
+.hero h1{
+
+    font-size:58px;
+
+    color:#D4AF37;
+
+    margin-bottom:20px;
+
+}
+
+.hero p{
+
+    color:#B7B7B7;
+
+    max-width:700px;
+
+    margin:auto;
+
+    font-size:20px;
+
+    line-height:1.7;
+
+}
+
+.btn-principal{
+
+    display:inline-block;
+
+    margin-top:35px;
+
+    background:#D4AF37;
+
+    color:#111111;
+
+    text-decoration:none;
+
+    padding:15px 35px;
+
+    border-radius:10px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.btn-principal:hover{
+
+    background:#E7C45B;
+
+}
+
+/* SERVIÇOS */
+
+.servicos{
+
+    width:90%;
+
+    max-width:1400px;
+
+    margin:80px auto;
+
+}
+
+.servicos h2{
+
+    text-align:center;
+
+    color:#D4AF37;
+
+    font-size:38px;
+
+    margin-bottom:50px;
+
+}
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+    gap:30px;
+
+}
+
+.card{
+
+    background:#161616;
+
+    border:1px solid #2B2B2B;
+
+    border-radius:16px;
+
+    padding:35px;
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    border-color:#D4AF37;
+
+    transform:translateY(-6px);
+
+}
+
+.card h3{
+
+    color:#D4AF37;
+
+    margin-bottom:15px;
+
+}
+
+.card p{
+
+    color:#BDBDBD;
+
+    line-height:1.6;
+
+}
+
+/* FOOTER */
+
+footer{
+
+    margin-top:80px;
+
+    padding:30px;
+
+    border-top:1px solid #242424;
+
+    text-align:center;
+
+    color:#9E9E9E;
+
+}
+
+/* RESPONSIVO */
+
+@media(max-width:768px){
+
+    .container{
+
+        flex-direction:column;
+
+        height:auto;
+
+        padding:20px 0;
+
+        gap:20px;
+
+    }
+
+    nav ul{
+
+        flex-direction:column;
+
+        align-items:center;
+
+    }
+
+    .hero h1{
+
+        font-size:40px;
+
+    }
+
+    .hero p{
+
+        font-size:18px;
+
+    }
+
+}
+
+/* ===========================
+   LOGIN
+=========================== */
+
+.login-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:30px;
+
+}
+
+.login-card{
+
+    width:100%;
+    max-width:430px;
+
+    background:#161616;
+
+    border:1px solid #2B2B2B;
+
+    border-radius:18px;
+
+    padding:40px;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.4);
+
+}
+
+.logo-login{
+
+    text-align:center;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+
+}
+
+.login-card h1{
+
+    text-align:center;
+
+    color:#FFFFFF;
+
+    margin-bottom:10px;
+
+}
+
+.login-card p{
+
+    text-align:center;
+
+    color:#9A9A9A;
+
+    margin-bottom:30px;
+
+}
+
+.login-card form{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.login-card label{
+
+    color:#D4D4D4;
+
+    margin-bottom:8px;
+
+    margin-top:18px;
+
+    font-weight:600;
+
+}
+
+.login-card input{
+
+    background:#0F0F0F;
+
+    border:1px solid #333;
+
+    color:#FFF;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+}
+
+.login-card input:focus{
+
+    outline:none;
+
+    border-color:#D4AF37;
+
+    box-shadow:0 0 0 3px rgba(212,175,55,.15);
+
+}
+
+.login-card button{
+
+    margin-top:30px;
+
+    background:#D4AF37;
+
+    color:#111;
+
+    border:none;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.login-card button:hover{
+
+    background:#E7C45B;
+
+}
+
+.login-links{
+
+    margin-top:25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+}
+
+.login-links a{
+
+    color:#D4AF37;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+}
+
+.login-links a:hover{
+
+    text-decoration:underline;
+
 }

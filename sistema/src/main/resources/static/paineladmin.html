@@ -1,121 +1,253 @@
 <!DOCTYPE html>
-<!-- Painel administrativo servido como arquivo estático pelo Spring Boot. -->
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-  <!-- Configuração de caracteres, responsividade e CSS externo. -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <title>Painel Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo</title>
+
+    <link rel="stylesheet" href="css/paineladmin.css">
 </head>
 
 <body>
-  <div>
-    <h1>Painel Admin</h1>
-  </div>
-  <main>
-    <!-- Formulário cujo submit é interceptado pelo script.js. -->
-    <section>
-      <h2>Cadastrar Clientes</h2>
-      <form id="clientForm">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="nome" required><br><br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="header-content">
+            <h1>Painel Administrativo</h1>
+            <p>Gerenciamento da Barbearia</p>
+        </div>
+    </header>
 
-        <label for="age">Idade:</label>
-        <input type="number" id="age" name="age" required><br><br>
+    <!-- Conteúdo -->
+    <main class="dashboard">
 
+        <!-- CLIENTES -->
 
-        <input type="submit" value="Cadastrar">
-      </form>
-      <!-- Região acessível que anuncia sucesso ou erro sem recarregar a página. -->
-      <p id="message" role="status" aria-live="polite"></p>
-    </section>
-    <!-- O JavaScript preenche showClient com a resposta de GET /api/clients. -->
-    <section>
-      <h2>Buscar cliente</h2>
-      <div id="showClient">
+        <section>
+            <h2>Cadastrar Cliente</h2>
 
-      </div>
-      <button id="btnBuscar">Buscar clientes</button>
-    </section>
+            <form id="clientForm">
 
-    <!-- Campos usados para montar o JSON enviado a POST /api/services. -->
-    <section>
-      <h2>Cadastrar serviço</h2>
-      <form id="formservice">
-        <label for="nameService">Nome</label>
-        <input type="text" id="nameService" name="nameService" required><br>
-        <label for="description">Descrição</label>
-        <input type="text" id="description" name="description" required><br>
-        <label for="price">Preço</label>
-        <input type="text" id="price" name="price" required><br>
-        <label for="duration_minutes">Duração</label>
-        <input type="text" id="duration_minutes" name="duration_minutes" required><br>
-        <button type="submit">Cadastrar</button>
-      </form>
-    </section>
-    <!-- Contêiner e botão para consultar o catálogo de serviços. -->
-    <section>
-      <h2>Listar Serviços</h2>
-      <div id="showServices"></div>
-      <button id="btnService">Buscar Serviços</button>
-    </section>
+                <label for="name">Nome</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="nome"
+                    placeholder="Digite o nome do cliente"
+                    required>
 
-    <section>
-      <h2>Cadastrar profissionais</h2>
-      <form id="formPro">
-        <label for="name">Nome</label>
-        <input type="text" name="name" id="namePro"><br>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="emailPro"><br>
-        <label for="phone">Telefone</label>
-        <input type="text" name="phone" id="phonePro"><br>
-        <label for="servicesPro">Serviços</label>
-        <input type="number" name="servicesPro" id="servicesPro"><br>
-        <button type="submit">Cadastrar profissional</button>
-      </form>
-    </section>
-    <section>
-      <h2>Listar Profissionais</h2>
-      <div id="showProfessionals"></div>
-      <button id="btnPro">Buscar Serviços</button>
-    </section>
-    <section>
-      <h2>Marcar horário</h2>
-      <form id="formAppointments">
-        <label for="clientId">Id do cliente</label>
-        <input type="number" id="clientId" name="clientId" required><br>
+                <label for="email">E-mail</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Digite o e-mail"
+                    required>
 
-        <label for="professionalId">Id do profissional</label>
-        <input type="number" id="professionalId" name="professionalId" required><br>
+                <label for="age">Idade</label>
+                <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    placeholder="Digite a idade"
+                    required>
 
-        <label for="serviceId">Id do serviço</label>
-        <input type="number" id="serviceId" name="serviceId" required><br>
+                <input type="submit" value="Cadastrar Cliente">
 
-        <label for="startTime">Horário marcado</label>
-        <input type="datetime-local" id="startTime" name="startTime" required><br>
+            </form>
 
-        <label for="notes">Notas</label>
-        <input type="text" name="notes" id="notes"><br>
+            <p id="message"></p>
 
-        <button type="submit">Cadastrar</button>
+        </section>
 
-      </form>
-    </section>
-    <section>
-      <h2>Listar agendamentos</h2>
-      <div id="showAppointments"></div>
-      <button id="btnAppointments">Buscar Agendamentos</button>
-    </section>
+        <section>
 
+            <h2>Buscar Clientes</h2>
 
-  </main>
-  <!-- Carregado no fim para garantir que os elementos do DOM já existam. -->
-  <script src="script.js"></script>
+            <div id="showClient"></div>
+
+            <button id="btnBuscar">
+                Buscar Clientes
+            </button>
+
+        </section>
+
+        <!-- SERVIÇOS -->
+
+        <section>
+
+            <h2>Cadastrar Serviço</h2>
+
+            <form id="formservice">
+
+                <label for="nameService">Nome</label>
+                <input
+                    type="text"
+                    id="nameService"
+                    placeholder="Nome do serviço"
+                    required>
+
+                <label for="description">Descrição</label>
+                <input
+                    type="text"
+                    id="description"
+                    placeholder="Descrição"
+                    required>
+
+                <label for="price">Preço</label>
+                <input
+                    type="number"
+                    step="0.01"
+                    id="price"
+                    placeholder="0,00"
+                    required>
+
+                <label for="duration_minutes">Duração (min)</label>
+                <input
+                    type="number"
+                    id="duration_minutes"
+                    placeholder="Ex.: 45"
+                    required>
+
+                <button type="submit">
+                    Cadastrar Serviço
+                </button>
+
+            </form>
+
+        </section>
+
+        <section>
+
+            <h2>Lista de Serviços</h2>
+
+            <div id="showServices"></div>
+
+            <button id="btnService">
+                Buscar Serviços
+            </button>
+
+        </section>
+
+        <!-- PROFISSIONAIS -->
+
+        <section>
+
+            <h2>Cadastrar Profissional</h2>
+
+            <form id="formPro">
+
+                <label for="namePro">Nome</label>
+                <input
+                    type="text"
+                    id="namePro"
+                    placeholder="Nome do profissional"
+                    required>
+
+                <label for="emailPro">E-mail</label>
+                <input
+                    type="email"
+                    id="emailPro"
+                    placeholder="E-mail"
+                    required>
+
+                <label for="phonePro">Telefone</label>
+                <input
+                    type="text"
+                    id="phonePro"
+                    placeholder="Telefone"
+                    required>
+
+                <label for="servicesPro">ID do Serviço</label>
+                <input
+                    type="number"
+                    id="servicesPro"
+                    placeholder="Informe o ID do serviço"
+                    required>
+
+                <button type="submit">
+                    Cadastrar Profissional
+                </button>
+
+            </form>
+
+        </section>
+
+        <section>
+
+            <h2>Profissionais</h2>
+
+            <div id="showProfessionals"></div>
+
+            <button id="btnPro">
+                Buscar Profissionais
+            </button>
+
+        </section>
+
+        <!-- AGENDAMENTOS -->
+
+        <section>
+
+            <h2>Novo Agendamento</h2>
+
+            <form id="formAppointments">
+
+                <label for="clientId">ID do Cliente</label>
+                <input
+                    type="number"
+                    id="clientId"
+                    required>
+
+                <label for="professionalId">ID do Profissional</label>
+                <input
+                    type="number"
+                    id="professionalId"
+                    required>
+
+                <label for="serviceId">ID do Serviço</label>
+                <input
+                    type="number"
+                    id="serviceId"
+                    required>
+
+                <label for="startTime">Data e Hora</label>
+                <input
+                    type="datetime-local"
+                    id="startTime"
+                    required>
+
+                <label for="notes">Observações</label>
+                <input
+                    type="text"
+                    id="notes"
+                    placeholder="Observações (opcional)">
+
+                <button type="submit">
+                    Agendar Horário
+                </button>
+
+            </form>
+
+        </section>
+
+        <section>
+
+            <h2>Agendamentos</h2>
+
+            <div id="showAppointments"></div>
+
+            <button id="btnAppointments">
+                Buscar Agendamentos
+            </button>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
 </body>
 
 </html>

@@ -1,0 +1,299 @@
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Manrope",sans-serif;
+    background:#0B0B0B;
+    color:#FFFFFF;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+header{
+    width:100%;
+    background:#111111;
+    border-bottom:1px solid #242424;
+    padding:25px 40px;
+}
+
+.header-content h1{
+    color:#D4AF37;
+    font-size:32px;
+    font-weight:700;
+}
+
+.header-content p{
+    color:#9A9A9A;
+    margin-top:6px;
+}
+
+/* ===========================
+   GRID
+=========================== */
+
+.dashboard{
+
+    width:95%;
+    max-width:1500px;
+
+    margin:40px auto;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(450px,1fr));
+    gap:30px;
+
+}
+
+/* ===========================
+   CARDS
+=========================== */
+
+section{
+
+    background:#161616;
+
+    border:1px solid #2B2B2B;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    transition:.25s;
+
+}
+
+section:hover{
+
+    border-color:#D4AF37;
+
+    transform:translateY(-4px);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+}
+
+/* ===========================
+   TITULOS
+=========================== */
+
+section h2{
+
+    color:#D4AF37;
+
+    margin-bottom:25px;
+
+    font-size:24px;
+
+    border-bottom:1px solid #2B2B2B;
+
+    padding-bottom:12px;
+
+}
+
+/* ===========================
+   FORM
+=========================== */
+
+form{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+label{
+
+    color:#D8D8D8;
+
+    margin-bottom:8px;
+
+    margin-top:15px;
+
+    font-weight:600;
+
+}
+
+input{
+
+    width:100%;
+
+    padding:14px;
+
+    background:#0F0F0F;
+
+    border:1px solid #333;
+
+    border-radius:10px;
+
+    color:#FFFFFF;
+
+    font-size:15px;
+
+    transition:.2s;
+
+}
+
+input::placeholder{
+
+    color:#666;
+
+}
+
+input:focus{
+
+    outline:none;
+
+    border-color:#D4AF37;
+
+    box-shadow:0 0 0 3px rgba(212,175,55,.15);
+
+}
+
+/* ===========================
+   BOTÕES
+=========================== */
+
+button,
+input[type="submit"]{
+
+    margin-top:22px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#D4AF37;
+
+    color:#111111;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+button:hover,
+input[type="submit"]:hover{
+
+    background:#E7C45B;
+
+    transform:translateY(-2px);
+
+}
+
+/* ===========================
+   CAIXAS DE RESULTADO
+=========================== */
+
+#showClient,
+#showServices,
+#showProfessionals,
+#showAppointments{
+
+    margin-bottom:18px;
+
+    min-height:140px;
+
+    background:#101010;
+
+    border:1px solid #2D2D2D;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    color:#E6E6E6;
+
+    overflow:auto;
+
+}
+
+/* ===========================
+   MENSAGEM
+=========================== */
+
+#message{
+
+    margin-top:15px;
+
+    color:#20D67B;
+
+    font-weight:bold;
+
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#101010;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#D4AF37;
+
+    border-radius:20px;
+
+}
+
+/* ===========================
+   RESPONSIVO
+=========================== */
+
+@media(max-width:1000px){
+
+    .dashboard{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    header{
+
+        padding:20px;
+
+    }
+
+    .header-content h1{
+
+        font-size:26px;
+
+    }
+
+    section{
+
+        padding:20px;
+
+    }
+
+}
