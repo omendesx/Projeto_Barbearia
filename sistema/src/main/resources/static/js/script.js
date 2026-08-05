@@ -111,6 +111,7 @@ function renderAll() {
   renderClients();
   renderProfessionals();
   renderServices();
+  document.querySelectorAll(".deactivate").forEach((button) => button.textContent = "Excluir");
 }
 function renderDashboard() {
   const todayKey = new Date().toDateString(),
@@ -161,10 +162,15 @@ function renderAppointments() {
         )
         .join("")
     : '<tr><td colspan="7"><div class="empty">Nenhum agendamento encontrado.</div></td></tr>';
+  rows.forEach((appointment, index) => {
+    if (!["COMPLETED", "CANCELLED", "NO_SHOW"].includes(appointment.status)) return;
+    const cell = $("#appointmentsTable").rows[index]?.lastElementChild;
+    if (cell) cell.insertAdjacentHTML("beforeend", `<button class="icon-button delete-appointment" data-id="${appointment.id}">Excluir</button>`);
+  });
 }
 function renderClients() {
   const q = $("#clientSearch").value.toLowerCase(),
-    rows = state.clients.filter((c) => c.name.toLowerCase().includes(q));
+    rows = state.clients.filter((c) => c.active !== false && c.name.toLowerCase().includes(q));
   $("#clientsTable").innerHTML = rows.length
     ? rows
         .map(
@@ -175,8 +181,9 @@ function renderClients() {
     : '<tr><td colspan="5"><div class="empty">Nenhum cliente encontrado.</div></td></tr>';
 }
 function renderProfessionals() {
-  $("#professionalsGrid").innerHTML = state.professionals.length
-    ? state.professionals
+  const visibleProfessionals = state.professionals.filter((p) => p.active !== false);
+  $("#professionalsGrid").innerHTML = visibleProfessionals.length
+    ? visibleProfessionals
         .map(
           (p) =>
             `<article class="entity-card"><div class="entity-card-head"><div><h3>${esc(p.name)}</h3><p>${esc(p.email)} · ${esc(p.phone || "Sem telefone")}</p></div><span class="badge ${p.active === false ? "inactive" : "active"}">${p.active === false ? "Inativo" : "Ativo"}</span></div><div class="tags">${p.services.length ? p.services.map((s) => `<span class="tag">${esc(s.name)}</span>`).join("") : '<span class="tag">Sem serviços</span>'}</div><div class="card-actions"><button class="icon-button edit" data-type="professional" data-id="${p.id}">Editar</button>${p.active !== false ? `<button class="icon-button deactivate" data-type="professional" data-id="${p.id}">Desativar</button>` : ""}</div></article>`,
@@ -185,8 +192,9 @@ function renderProfessionals() {
     : '<div class="empty">Nenhum profissional cadastrado.</div>';
 }
 function renderServices() {
-  $("#servicesGrid").innerHTML = state.services.length
-    ? state.services
+  const visibleServices = state.services.filter((s) => s.active !== false);
+  $("#servicesGrid").innerHTML = visibleServices.length
+    ? visibleServices
         .map(
           (s) =>
             `<article class="entity-card"><div class="entity-card-head"><div><h3>${esc(s.name)}</h3><p>${esc(s.description || "Sem descrição")}</p></div><span class="badge ${s.active === false ? "inactive" : "active"}">${s.active === false ? "Inativo" : "Ativo"}</span></div><div class="price">${money(s.price)}</div><p>${s.durationMinutes} minutos</p><div class="card-actions"><button class="icon-button edit" data-type="service" data-id="${s.id}">Editar</button>${s.active !== false ? `<button class="icon-button deactivate" data-type="service" data-id="${s.id}">Desativar</button>` : ""}</div></article>`,
@@ -248,6 +256,7 @@ function openModal(type, item = null) {
         'required maxlength="150"',
       ) +
       field("Telefone", "phone", "tel", item?.phone, 'maxlength="30"') +
+      field("Senha de acesso", "password", "password", "", `${item ? '' : 'required'} minlength="6" placeholder="${item ? 'Deixe em branco para manter' : 'Mínimo de 6 caracteres'}"`) +
       `<div class="field full"><label>Serviços realizados</label><div class="check-list">${
         state.services
           .filter((s) => s.active !== false || selected.has(s.id))
@@ -348,6 +357,7 @@ async function submitForm(event) {
       name: f.get("name").trim(),
       email: f.get("email").trim(),
       phone: f.get("phone").trim(),
+      password: f.get("password") || null,
       active: item?.active ?? true,
       serviceIds: f.getAll("serviceIds").map(Number),
     };
@@ -385,7 +395,7 @@ async function submitForm(event) {
   }
 }
 async function deactivate(type, id) {
-  if (!confirm("Deseja realmente desativar este registro?")) return;
+  if (!confirm("Remover este registro das listagens?")) return;
   const path = {
     client: "clients",
     professional: "professionals",
@@ -393,7 +403,7 @@ async function deactivate(type, id) {
   }[type];
   try {
     await api(`/api/${path}/${id}`, { method: "DELETE" });
-    toast("Registro desativado.");
+    toast("Registro removido da listagem.");
     await loadAll();
   } catch (e) {
     toast(e.message, true);
@@ -412,6 +422,14 @@ async function changeStatus(id, status) {
     toast(e.message, true);
   }
 }
+async function deleteAppointment(id) {
+  if (!confirm("Excluir definitivamente este agendamento?")) return;
+  try {
+    await api(`/api/appointments/${id}`, { method: "DELETE" });
+    toast("Agendamento excluído.");
+    await loadAll();
+  } catch (e) { toast(e.message, true); }
+}
 function navigate(view) {
   document
     .querySelectorAll(".view")
@@ -428,7 +446,8 @@ document.addEventListener("click", (e) => {
   const open = e.target.closest("[data-open]"),
     go = e.target.closest("[data-go]"),
     edit = e.target.closest(".edit"),
-    off = e.target.closest(".deactivate");
+    off = e.target.closest(".deactivate"),
+    deleteButton = e.target.closest(".delete-appointment");
   if (open) openModal(open.dataset.open);
   if (go) navigate(go.dataset.go);
   if (edit) {
@@ -446,6 +465,7 @@ document.addEventListener("click", (e) => {
     );
   }
   if (off) deactivate(off.dataset.type, off.dataset.id);
+  if (deleteButton) deleteAppointment(deleteButton.dataset.id);
 });
 document
   .querySelectorAll(".nav-item")

@@ -39,4 +39,6 @@ public class AppointmentController {
     @PatchMapping("/{id}/status") public AppointmentResponseDTO status(@PathVariable Long id, @Valid @RequestBody AppointmentStatusDTO request) {
         return mapper.appointment(service.changeStatus(id, request.status()));
     }
+    @DeleteMapping("/{id}") @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) { service.deleteFinished(id); }
 }

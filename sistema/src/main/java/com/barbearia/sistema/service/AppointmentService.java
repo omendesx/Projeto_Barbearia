@@ -84,6 +84,15 @@ public class AppointmentService {
         return repository.save(appointment);
     }
 
+    @Transactional
+    public void deleteFinished(Long id) {
+        Appointment appointment = find(id);
+        if (!Set.of(AppointmentStatus.COMPLETED, AppointmentStatus.CANCELLED, AppointmentStatus.NO_SHOW).contains(appointment.getStatus())) {
+            throw new BusinessRuleException("Somente agendamentos encerrados podem ser excluidos");
+        }
+        repository.delete(appointment);
+    }
+
     private void fillAndValidate(Appointment appointment, AppointmentRequestDTO request, Long excludedId) {
         // Carrega as relações por ID e falha cedo quando cliente ou profissional não existe.
         Client client = clientRepository.findById(request.clientId()).orElseThrow(() -> new ResourceNotFoundException("Cliente nao encontrado"));

@@ -8,6 +8,7 @@ import com.barbearia.sistema.model.Professional;
 import com.barbearia.sistema.repository.BarberServiceRepository;
 import com.barbearia.sistema.repository.ProfessionalRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashSet;
@@ -19,6 +20,7 @@ import java.util.Set;
 public class ProfessionalService {
     private final ProfessionalRepository repository;
     private final BarberServiceRepository serviceRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public ProfessionalService(ProfessionalRepository repository, BarberServiceRepository serviceRepository) {
         this.repository = repository;
@@ -38,6 +40,8 @@ public class ProfessionalService {
     @Transactional
     public Professional create(Professional professional, Set<Long> serviceIds) {
         if (repository.existsByEmailIgnoreCase(professional.getEmail())) throw new DuplicateResourceException("Email de profissional ja cadastrado");
+        if (professional.getPassword() == null || professional.getPassword().isBlank()) throw new BusinessRuleException("Informe uma senha para o profissional");
+        professional.setPassword(passwordEncoder.encode(professional.getPassword()));
         professional.setId(null);
         // IDs recebidos da API são trocados por entidades válidas antes de salvar.
         professional.setServices(loadServices(serviceIds));
@@ -52,6 +56,7 @@ public class ProfessionalService {
         professional.setName(input.getName());
         professional.setEmail(input.getEmail());
         professional.setPhone(input.getPhone());
+        if (input.getPassword() != null && !input.getPassword().isBlank()) professional.setPassword(passwordEncoder.encode(input.getPassword()));
         if (input.getActive() != null) professional.setActive(input.getActive());
         professional.setServices(loadServices(serviceIds));
         normalize(professional);

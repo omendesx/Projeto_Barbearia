@@ -23,5 +23,7 @@ public interface ProfessionalRepository extends JpaRepository<Professional, Long
 
     boolean existsByEmailIgnoreCase(String email);
     boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id);
+    @EntityGraph(attributePaths = "services")
+    Optional<Professional> findByEmailIgnoreCase(String email);
 }
 

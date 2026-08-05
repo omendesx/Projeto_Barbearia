@@ -677,5 +677,35 @@ td small {
   }
 }
 
+@media (max-width: 760px) {
+  .app-shell, main, .view { width:100%; min-width:0; }
+  main { overflow-x:hidden; }
+  #appointmentsView, #clientsView { min-width:0; overflow:hidden; }
+  #appointmentsView .table-wrap, #clientsView .table-wrap {
+    display:block;
+    width:100%;
+    max-width:calc(100vw - 36px);
+    min-width:0;
+    box-sizing:border-box;
+    overflow-x:scroll!important;
+    overflow-y:hidden;
+    overscroll-behavior-inline:contain;
+    touch-action:pan-x;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:auto;
+    scrollbar-color:var(--gold) #171814;
+  }
+  #appointmentsView .table-wrap::-webkit-scrollbar,
+  #clientsView .table-wrap::-webkit-scrollbar { height:9px; display:block; }
+  #appointmentsView .table-wrap::-webkit-scrollbar-track,
+  #clientsView .table-wrap::-webkit-scrollbar-track { background:#171814; border-radius:20px; }
+  #appointmentsView .table-wrap::-webkit-scrollbar-thumb,
+  #clientsView .table-wrap::-webkit-scrollbar-thumb { background:var(--gold); border-radius:20px; }
+  #appointmentsView table { width:920px!important; min-width:920px; }
+  #clientsView table { width:680px!important; min-width:680px; }
+  #appointmentsView th, #appointmentsView td,
+  #clientsView th, #clientsView td { white-space:nowrap; }
+}
+
 /* Overrides finais do tema escuro */
 body{background:var(--bg);color:var(--ink)}.topbar{background:rgba(12,13,11,.94)}.metrics article,.panel,.entity-card,.modal{background:var(--surface);border-color:var(--line)}.toolbar .search,.toolbar select,.search input,.secondary,.icon-button,.logout-admin{background:#11120f;color:var(--ink);border-color:var(--line)}th{background:#181915;color:#85857e}td{border-color:var(--line)}.tag{background:#22231e;color:#b8b6ad}.field input,.field select,.field textarea,.check-list{background:#0c0d0b;color:#fff;border-color:#34352e}.modal-head,.modal-actions,.panel-head,.card-actions{border-color:var(--line)}

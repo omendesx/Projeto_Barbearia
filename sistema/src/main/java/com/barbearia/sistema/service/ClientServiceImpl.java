@@ -64,6 +64,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public void delete(Long id) {
-        repository.delete(findById(id));
+        Client client = findById(id);
+        client.setActive(false);
+        repository.save(client);
     }
 }

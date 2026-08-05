@@ -22,7 +22,7 @@ async function send(path, body) {
       }),
       data = await r.json().catch(() => ({}));
     if (!r.ok) throw Error(data.message || "Não foi possível continuar");
-    location.href = data.role === "ADMIN" ? "paineladmin.html" : "cliente.html";
+    location.href = data.role === "ADMIN" ? "paineladmin.html" : data.role === "PROFESSIONAL" ? "barbeiro.html" : "cliente.html";
   } catch (e) {
     message.textContent = e.message;
     message.className = "auth-message error";

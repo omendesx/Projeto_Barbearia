@@ -37,7 +37,7 @@ public class ProfessionalController {
     // Monta a entidade; a associação de serviços será validada na camada de serviço.
     private Professional entity(ProfessionalRequestDTO r) {
         Professional p = new Professional();
-        p.setName(r.name()); p.setEmail(r.email()); p.setPhone(r.phone()); p.setActive(r.active());
+        p.setName(r.name()); p.setEmail(r.email()); p.setPhone(r.phone()); p.setPassword(r.password()); p.setActive(r.active());
         return p;
     }
 }

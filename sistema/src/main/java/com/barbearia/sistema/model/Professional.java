@@ -26,6 +26,9 @@ public class Professional {
     @Column(length = 30)
     private String phone;
 
+    @Column(length = 255)
+    private String password;
+
     @Column(nullable = false)
     private Boolean active = true;
 

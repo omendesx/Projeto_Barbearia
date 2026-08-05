@@ -5,8 +5,10 @@ import com.barbearia.sistema.exception.BusinessRuleException;
 import com.barbearia.sistema.exception.DuplicateResourceException;
 import com.barbearia.sistema.model.Client;
 import com.barbearia.sistema.model.User;
+import com.barbearia.sistema.model.Professional;
 import com.barbearia.sistema.repository.ClientRepository;
 import com.barbearia.sistema.repository.UserRepository;
+import com.barbearia.sistema.repository.ProfessionalRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,9 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final UserRepository users;
     private final ClientRepository clients;
+    private final ProfessionalRepository professionals;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public AuthController(UserRepository users, ClientRepository clients) { this.users=users; this.clients=clients; }
+    public AuthController(UserRepository users, ClientRepository clients, ProfessionalRepository professionals) { this.users=users; this.clients=clients; this.professionals=professionals; }
 
     @PostMapping("/login")
     public SessionResponseDTO login(@Valid @RequestBody LoginRequestDTO request, HttpSession session) {
@@ -34,6 +37,11 @@ public class AuthController {
         if(client!=null && Boolean.TRUE.equals(client.getActive()) && client.getPassword()!=null && encoder.matches(request.password(),client.getPassword())) {
             session.setAttribute("role","CLIENT"); session.setAttribute("clientId",client.getId());
             return new SessionResponseDTO(client.getId(),client.getName(),client.getEmail(),"CLIENT");
+        }
+        Professional professional=professionals.findByEmailIgnoreCase(request.email()).orElse(null);
+        if(professional!=null && Boolean.TRUE.equals(professional.getActive()) && professional.getPassword()!=null && encoder.matches(request.password(),professional.getPassword())) {
+            session.setAttribute("role","PROFESSIONAL"); session.setAttribute("professionalId",professional.getId());
+            return new SessionResponseDTO(professional.getId(),professional.getName(),professional.getEmail(),"PROFESSIONAL");
         }
         throw new BusinessRuleException("Email ou senha invalidos");
     }
@@ -52,6 +60,7 @@ public class AuthController {
         String role=(String)session.getAttribute("role");
         if("ADMIN".equals(role)) { User u=users.findById((Long)session.getAttribute("userId")).orElseThrow(); return new SessionResponseDTO(u.getId(),u.getName(),u.getEmail(),role); }
         if("CLIENT".equals(role)) { Client c=clients.findById((Long)session.getAttribute("clientId")).orElseThrow(); return new SessionResponseDTO(c.getId(),c.getName(),c.getEmail(),role); }
+        if("PROFESSIONAL".equals(role)) { Professional p=professionals.findById((Long)session.getAttribute("professionalId")).orElseThrow(); return new SessionResponseDTO(p.getId(),p.getName(),p.getEmail(),role); }
         throw new BusinessRuleException("Sessao nao autenticada");
     }
 
