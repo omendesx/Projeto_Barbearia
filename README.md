@@ -6,7 +6,7 @@ Sistema web desenvolvido para automatizar o gerenciamento de barbearias, oferece
 
 <br>
 
-![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
+![Status](https://img.shields.io/badge/Status-Concluído-green)
 ![Java](https://img.shields.io/badge/Java-21-red)
 ![Spring Boot](https://img.shields.io/badge/SpringBoot-3-green)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue)
