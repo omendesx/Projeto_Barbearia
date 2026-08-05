@@ -55,7 +55,7 @@ public class ClientServiceImpl implements ClientService {
         }
         client.setName(input.getName().trim());
         client.setEmail(input.getEmail().trim().toLowerCase());
-        client.setAge(input.getAge());
+        client.setPhone(input.getPhone() == null ? null : input.getPhone().trim());
         // Se active não veio, conserva o valor que já estava persistido.
         client.setActive(input.getActive() == null ? client.getActive() : input.getActive());
         return repository.save(client);

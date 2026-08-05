@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Minha agenda — BarberPro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/cliente.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="index.html"><b>BARBER</b>PRO</a>
+      <div><span id="clientName"></span><button id="logout">Sair</button></div>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <small>ÁREA DO CLIENTE</small>
+          <h1>Seu próximo visual começa aqui.</h1>
+          <p>
+            Escolha o profissional, os serviços e um horário realmente
+            disponível.
+          </p>
+        </div>
+      </section>
+      <div class="layout">
+        <section class="booking">
+          <h2>Novo agendamento</h2>
+          <form id="bookingForm">
+            <label>Profissional</label
+            ><select id="professional" required>
+              <option value="">Selecione</option></select
+            ><label>Serviços</label>
+            <div id="services" class="checks muted">
+              Selecione um profissional.
+            </div>
+            <label>Data</label
+            ><input id="bookingDate" type="date" required /><button
+              type="button"
+              id="findSlots"
+            >
+              Ver horários disponíveis
+            </button>
+            <div id="slots" class="slots"></div>
+            <label>Observações</label
+            ><textarea
+              id="notes"
+              maxlength="500"
+              placeholder="Opcional"
+            ></textarea
+            ><button id="bookButton" disabled>Confirmar agendamento</button>
+          </form>
+        </section>
+        <section>
+          <h2>Meus agendamentos</h2>
+          <div id="myAppointments" class="appointments">Carregando…</div>
+        </section>
+      </div>
+    </main>
+    <div id="toast"></div>
+    <script src="js/cliente.js"></script>
+  </body>
+</html>

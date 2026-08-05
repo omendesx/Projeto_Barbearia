@@ -30,8 +30,8 @@ public class Client {
     @Column(name = "email", nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(name = "age")
-    private Integer age;
+    @Column(name = "phone", length = 30)
+    private String phone;
 
     @Column(name = "date_register", updatable = false)
     private LocalDateTime dateRegister;
@@ -42,11 +42,15 @@ public class Client {
     @Column(name = "active")
     private Boolean active = true;
 
+    // Clientes criados pelo portal possuem credencial própria. Registros antigos podem ficar sem senha.
+    @Column(name = "password", length = 255)
+    private String password;
+
     // Construtor de conveniência usado pelo controller e pelos testes.
-    public Client(String name, String email, Integer age) {
+    public Client(String name, String email, String phone) {
         this.name = name;
         this.email = email;
-        this.age = age;
+        this.phone = phone;
     }
 
     // Chamado automaticamente antes da primeira gravação.
