@@ -50,8 +50,8 @@ class AppointmentBusinessRulesTests {
     // Verifica cálculo agregado e a principal regra de conflito de horários.
     @Test
     void calculatesTotalAndDurationAndRejectsOverlappingAppointment() {
-        Client firstClient = clientRepository.save(new Client("Cliente 1", "cliente1@test.com", 25));
-        Client secondClient = clientRepository.save(new Client("Cliente 2", "cliente2@test.com", 30));
+        Client firstClient = clientRepository.save(new Client("Cliente 1", "cliente1@test.com", "11999990001"));
+        Client secondClient = clientRepository.save(new Client("Cliente 2", "cliente2@test.com", "11999990002"));
 
         BarberService haircut = service("Corte", "40.00", 30);
         BarberService beard = service("Barba", "25.00", 20);
