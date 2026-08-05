@@ -190,14 +190,6 @@ main {
   position: relative;
   overflow: hidden;
 }
-.welcome:after {
-  content: "✂";
-  position: absolute;
-  right: 28%;
-  font-size: 120px;
-  color: #ffffff08;
-  transform: rotate(-25deg);
-}
 .welcome h2 {
   font: 700 30px "Playfair Display";
   margin-bottom: 8px;
