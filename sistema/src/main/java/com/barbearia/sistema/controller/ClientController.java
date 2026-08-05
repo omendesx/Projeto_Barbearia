@@ -45,14 +45,14 @@ public class ClientController {
 
     // Converte entrada da API em entidade sem permitir que o cliente defina o ID.
     private Client toEntity(ClientRequestDTO request) {
-        Client client = new Client(request.name(), request.email(), request.age());
+        Client client = new Client(request.name(), request.email(), request.phone());
         client.setActive(request.active());
         return client;
     }
 
     // DTO de resposta separa o contrato HTTP da estrutura persistida pelo JPA.
     private ClientResponseDTO toResponse(Client client) {
-        return new ClientResponseDTO(client.getId(), client.getName(), client.getEmail(), client.getAge(),
+        return new ClientResponseDTO(client.getId(), client.getName(), client.getEmail(), client.getPhone(),
                 client.getActive(), client.getDateRegister(), client.getDateUpdate());
     }
 }

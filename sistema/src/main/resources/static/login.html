@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Entrar — BarberPro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="login-page">
+      <div class="login-card">
+        <a class="logo-login" href="index.html"
+          ><span class="gold">BARBER</span>PRO</a
+        >
+        <div class="auth-tabs">
+          <button class="active" data-tab="login">Entrar</button
+          ><button data-tab="register">Criar conta</button>
+        </div>
+        <form id="loginForm">
+          <h1>Bem-vindo</h1>
+          <p>Entre como cliente ou administrador.</p>
+          <label>E-mail</label
+          ><input
+            name="email"
+            type="email"
+            required
+            placeholder="voce@email.com"
+          /><label>Senha</label
+          ><input
+            name="password"
+            type="password"
+            required
+            minlength="6"
+          /><button>Entrar</button>
+        </form>
+        <form id="registerForm" hidden>
+          <h1>Crie sua conta</h1>
+          <p>Cadastre-se para agendar seu horário.</p>
+          <label>Nome</label
+          ><input name="name" required maxlength="100" /><label>E-mail</label
+          ><input name="email" type="email" required /><label>Telefone</label
+          ><input name="phone" type="tel" required maxlength="30" placeholder="(00) 00000-0000" /><label
+            >Senha</label
+          ><input
+            name="password"
+            type="password"
+            required
+            minlength="6"
+          /><button>Criar conta</button>
+        </form>
+        <p class="auth-message" id="authMessage"></p>
+        <div class="login-links">
+          <a href="index.html">← Voltar ao início</a>
+        </div>
+      </div>
+    </main>
+    <script src="js/auth.js"></script>
+  </body>
+</html>
