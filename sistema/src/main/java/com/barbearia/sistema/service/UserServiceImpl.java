@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/** Implementa operações de usuário e protege as senhas antes da persistência. */
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
+    // BCrypt gera hash com salt; a senha original não deve ser armazenada.
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserServiceImpl(UserRepository repository) { this.repository = repository; }
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User save(User user) {
         if (repository.existsByEmailIgnoreCase(user.getEmail())) throw new DuplicateResourceException("Email ja cadastrado");
+        // Normaliza dados e transforma a senha antes que cheguem ao banco.
         normalizeAndEncode(user);
         user.setId(null);
         return repository.save(user);
@@ -44,6 +47,7 @@ public class UserServiceImpl implements UserService {
         return repository.save(user);
     }
 
+    // Método privado evita duplicar a preparação usada na criação e edição.
     private void normalizeAndEncode(User user) {
         user.setName(user.getName().trim());
         user.setEmail(user.getEmail().trim().toLowerCase());

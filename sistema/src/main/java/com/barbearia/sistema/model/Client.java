@@ -9,11 +9,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// Lombok elimina a repetição de getters, setters e construtores simples.
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity // Informa ao JPA que a classe é persistível.
 @Table(name = "clients")
 public class Client {
 
@@ -25,11 +26,12 @@ public class Client {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    // unique cria também uma proteção de unicidade no próprio banco.
     @Column(name = "email", nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(name = "age")
-    private Integer age;
+    @Column(name = "phone", length = 30)
+    private String phone;
 
     @Column(name = "date_register", updatable = false)
     private LocalDateTime dateRegister;
@@ -40,18 +42,25 @@ public class Client {
     @Column(name = "active")
     private Boolean active = true;
 
-    public Client(String name, String email, Integer age) {
+    // Clientes criados pelo portal possuem credencial própria. Registros antigos podem ficar sem senha.
+    @Column(name = "password", length = 255)
+    private String password;
+
+    // Construtor de conveniência usado pelo controller e pelos testes.
+    public Client(String name, String email, String phone) {
         this.name = name;
         this.email = email;
-        this.age = age;
+        this.phone = phone;
     }
 
+    // Chamado automaticamente antes da primeira gravação.
     @PrePersist
     public void prePersist() {
         dateRegister = LocalDateTime.now();
         dateUpdate = LocalDateTime.now();
     }
 
+    // Atualiza somente a data de modificação antes de cada UPDATE.
     @PreUpdate
     public void preUpdate() {
         dateUpdate = LocalDateTime.now();

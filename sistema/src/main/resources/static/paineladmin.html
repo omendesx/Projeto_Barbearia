@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10100f">
+  <title>BarberPro — Gestão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/paineladmin.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="index.html"><span><strong>BARBER</strong>PRO<small>GESTÃO INTELIGENTE</small></span></a>
+    <nav id="nav">
+      <button class="nav-item active" data-view="dashboard"><span>⌂</span> Visão geral</button>
+      <button class="nav-item" data-view="appointments"><span>◷</span> Agenda</button>
+      <button class="nav-item" data-view="clients"><span>♙</span> Clientes</button>
+      <button class="nav-item" data-view="professionals"><span>✂</span> Profissionais</button>
+      <button class="nav-item" data-view="services"><span>◇</span> Serviços</button>
+    </nav>
+    <div class="sidebar-foot"><span class="status-dot"></span><span><strong>Sistema online</strong><small>API conectada</small></span></div>
+  </aside>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="menu-button" id="menuButton" aria-label="Abrir menu">☰</button>
+      <div><p class="eyebrow">PAINEL ADMINISTRATIVO</p><h1 id="pageTitle">Visão geral</h1></div>
+      <div class="today" id="today"></div><button class="logout-admin" id="adminLogout">Sair</button>
+    </header>
+
+    <main>
+      <section class="view active" id="dashboardView">
+        <div class="welcome"><div><p class="eyebrow">BOM TRABALHO</p><h2>Seu negócio, em um só lugar.</h2><p>Acompanhe a operação da barbearia e mantenha a agenda em dia.</p></div><button class="primary" data-open="appointment">＋ Novo agendamento</button></div>
+        <div class="metrics">
+          <article><span class="metric-icon gold">◷</span><div><small>Agendamentos hoje</small><strong id="metricToday">—</strong></div></article>
+          <article><span class="metric-icon green">✓</span><div><small>Atendimentos concluídos</small><strong id="metricCompleted">—</strong></div></article>
+          <article><span class="metric-icon blue">♙</span><div><small>Clientes ativos</small><strong id="metricClients">—</strong></div></article>
+          <article><span class="metric-icon purple">✂</span><div><small>Profissionais ativos</small><strong id="metricProfessionals">—</strong></div></article>
+        </div>
+        <div class="panel"><div class="panel-head"><div><p class="eyebrow">PRÓXIMOS HORÁRIOS</p><h2>Agenda de hoje</h2></div><button class="link-button" data-go="appointments">Ver agenda completa →</button></div><div id="todayAppointments" class="schedule-list loading-block">Carregando agenda…</div></div>
+      </section>
+
+      <section class="view" id="appointmentsView">
+        <div class="section-head"><div><p class="eyebrow">ATENDIMENTOS</p><h2>Agenda</h2></div><button class="primary" data-open="appointment">＋ Novo agendamento</button></div>
+        <div class="toolbar"><div class="search"><span>⌕</span><input id="appointmentSearch" placeholder="Buscar por cliente ou profissional"></div><select id="appointmentStatusFilter"><option value="">Todos os status</option><option value="PENDING">Pendente</option><option value="CONFIRMED">Confirmado</option><option value="IN_PROGRESS">Em atendimento</option><option value="COMPLETED">Concluído</option><option value="CANCELLED">Cancelado</option><option value="NO_SHOW">Não compareceu</option></select></div>
+        <div class="panel table-wrap"><table><thead><tr><th>Data e hora</th><th>Cliente</th><th>Profissional</th><th>Serviços</th><th>Total</th><th>Status</th><th></th></tr></thead><tbody id="appointmentsTable"></tbody></table></div>
+      </section>
+
+      <section class="view" id="clientsView">
+        <div class="section-head"><div><p class="eyebrow">CADASTRO</p><h2>Clientes</h2></div><button class="primary" data-open="client">＋ Novo cliente</button></div>
+        <div class="toolbar"><div class="search"><span>⌕</span><input id="clientSearch" placeholder="Buscar cliente por nome"></div></div>
+        <div class="panel table-wrap"><table><thead><tr><th>Cliente</th><th>Telefone</th><th>Status</th><th>Cadastro</th><th></th></tr></thead><tbody id="clientsTable"></tbody></table></div>
+      </section>
+
+      <section class="view" id="professionalsView">
+        <div class="section-head"><div><p class="eyebrow">EQUIPE</p><h2>Profissionais</h2></div><button class="primary" data-open="professional">＋ Novo profissional</button></div>
+        <div id="professionalsGrid" class="card-grid"></div>
+      </section>
+
+      <section class="view" id="servicesView">
+        <div class="section-head"><div><p class="eyebrow">CATÁLOGO</p><h2>Serviços</h2></div><button class="primary" data-open="service">＋ Novo serviço</button></div>
+        <div id="servicesGrid" class="card-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true"><div class="modal-head"><div><p class="eyebrow" id="modalEyebrow">CADASTRO</p><h2 id="modalTitle"></h2></div><button class="close" id="modalClose" aria-label="Fechar">×</button></div><form id="entityForm"><div id="formFields" class="form-grid"></div><div class="modal-actions"><button type="button" class="secondary" id="modalCancel">Cancelar</button><button type="submit" class="primary" id="submitButton">Salvar</button></div></form></div>
+  </div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script src="js/script.js"></script>
+</body>
+</html>

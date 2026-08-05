@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Área do profissional — BarberPro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/barbeiro.css" />
+  </head>
+  <body>
+    <aside>
+      <a class="brand" href="index.html"
+        ><b>BARBER</b>PRO<small>PROFISSIONAL</small></a
+      >
+      <nav>
+        <button class="active" data-view="today">Hoje</button
+        ><button data-view="agenda">Minha agenda</button
+        ><button data-view="profile">Meu perfil</button>
+      </nav>
+      <button id="logout" class="logout">Sair da conta</button>
+    </aside>
+    <div class="shell">
+      <header>
+        <button id="menu">☰</button>
+        <div>
+          <small>ÁREA DO PROFISSIONAL</small>
+          <h1 id="title">Visão do dia</h1>
+        </div>
+        <div class="user">
+          <span id="avatar">B</span>
+          <div>
+            <strong id="barberName">Carregando…</strong><small>Barbeiro</small>
+          </div>
+        </div>
+      </header>
+      <main>
+        <section class="view active" id="todayView">
+          <div class="welcome">
+            <div>
+              <small>SEU DIA</small>
+              <h2 id="greeting">Bom trabalho.</h2>
+              <p>Acompanhe seus horários e atualize cada atendimento.</p>
+            </div>
+            <div id="clock"></div>
+          </div>
+          <div class="metrics">
+            <article>
+              <small>Atendimentos hoje</small><strong id="todayCount">—</strong>
+            </article>
+            <article>
+              <small>Próximo horário</small><strong id="nextTime">—</strong>
+            </article>
+            <article>
+              <small>Concluídos hoje</small><strong id="doneCount">—</strong>
+            </article>
+          </div>
+          <section class="panel">
+            <div class="panel-title">
+              <div>
+                <small>AGENDA DE HOJE</small>
+                <h2>Próximos clientes</h2>
+              </div>
+            </div>
+            <div id="todayList" class="appointment-list">
+              Carregando agenda…
+            </div>
+          </section>
+        </section>
+        <section class="view" id="agendaView">
+          <div class="page-head">
+            <div>
+              <small>ATENDIMENTOS</small>
+              <h2>Minha agenda</h2>
+            </div>
+            <select id="statusFilter">
+              <option value="">Todos os status</option>
+              <option value="PENDING">Pendente</option>
+              <option value="CONFIRMED">Confirmado</option>
+              <option value="IN_PROGRESS">Em atendimento</option>
+              <option value="COMPLETED">Concluído</option>
+              <option value="CANCELLED">Cancelado</option>
+              <option value="NO_SHOW">Não compareceu</option>
+            </select>
+          </div>
+          <div id="agendaList" class="appointment-list"></div>
+        </section>
+        <section class="view" id="profileView">
+          <div class="profile-card">
+            <span class="profile-avatar" id="profileAvatar">B</span>
+            <h2 id="profileName">—</h2>
+            <p id="profileEmail">—</p>
+            <p id="profilePhone">—</p>
+            <div>
+              <small>SERVIÇOS QUE VOCÊ REALIZA</small>
+              <div id="profileServices" class="tags"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div id="toast"></div>
+    <script src="js/barbeiro.js"></script>
+  </body>
+</html>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/** Controller CRUD dos usuários administrativos da aplicação. */
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -21,6 +22,7 @@ public class UserController {
 
     @GetMapping
     public List<UserResponseDTO> list(@RequestParam(required = false) String name) {
+        // Operador ternário escolhe entre listagem completa e busca por trecho do nome.
         List<User> users = name == null ? userService.findAll() : userService.findByNameContaining(name);
         return users.stream().map(this::toResponse).toList();
     }
@@ -48,10 +50,12 @@ public class UserController {
         userService.delete(id);
     }
 
+    // A senha ainda está pura aqui; o serviço é responsável por gerar seu hash.
     private User toEntity(UserRequestDTO dto) {
         return new User(dto.getName(), dto.getEmail(), dto.getPassword(), dto.getRole());
     }
 
+    // A resposta é montada campo a campo e deliberadamente não inclui a senha.
     private UserResponseDTO toResponse(User user) {
         UserResponseDTO dto = new UserResponseDTO();
         dto.setId(user.getId());
